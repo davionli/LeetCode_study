@@ -1,0 +1,34 @@
+class Solution(object):
+    def longestPalindrome(self, s):
+        sp = '#'
+        for i in s:
+            sp = sp + i + '#' #special process make the string odd#
+
+        p = []
+        for i in range(len(sp)):
+            p.insert(i, 1)
+            it = 1
+            while i+it < len(sp) and i-it >= 0 and sp[i+it] == sp[i-it]:
+                it += 1
+                p[i] += 1     #P[i] is the longest substr at position i#          
+"""
+TO SOLVE THIS PROBLEM, THERE IS A BETTER WAY TO MAKE IT O(N)
+下面计算P[i]，该算法增加两个辅助变量id和mx，其中id表示最大回文子串中心的位置，mx则为id+P[id]，也就是最大回文子串的边界。
+这个算法的关键点就在这里了：如果mx > i，那么P[i] >= MIN(P[2 * id - i], mx - i)。
+"""
+
+        max = 0
+        for i in range(len(p)):
+            if p[i] > p[max]:
+                max = i
+        print(max, p[max])
+        if (p[max]-1) % 2 == 0:
+            k = sp[max-(p[max]//2)*2:max+(p[max]//2)*2+1]
+        else:
+            k = sp[max-((p[max]-1)//2*2+1):max+((p[max]-1)//2*2+1)+1]
+        nk = k.replace('#', '')
+        return nk
+
+test = Solution()
+print(test.longestPalindrome('BAABBAABBAC'))
+
