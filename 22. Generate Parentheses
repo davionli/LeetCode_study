@@ -1,0 +1,40 @@
+#include <assert.h>
+#include <string>
+#include <iostream>
+#include <stack>
+#include <vector>
+
+using namespace std;
+
+
+void solve(int x, int y, int n, string m, vector<string> & result) {
+    if (x + y == 2 * n) 
+        result.push_back(m);
+    else {
+        if (x < n) {
+            m.push_back('(');
+            solve(x + 1, y, n, m, result);
+            m.pop_back();
+        }
+        if (y < n && y <x){
+            m.push_back(')');
+            solve(x, y + 1, n, m, result);
+            m.pop_back();
+        }
+    }
+    
+}
+
+vector<string> generateParenthesis(int n) {
+    vector<string> result;
+    solve(0, 0, n, "", result);
+    return result;
+}
+
+int main()
+{
+    vector<string> arr = generateParenthesis(3);
+    for (int i = 0; i < arr.size(); i++)
+        cout << arr[i] << endl;
+    return 0;
+}
