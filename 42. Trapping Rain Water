@@ -1,0 +1,27 @@
+int trap(vector<int>& height) {
+    int leftMax =0;
+    int rightMax = 0;
+    int leftArr[height.size()];
+    int rightArr[height.size()];
+    int result = 0;
+    for (int i = 0; i < height.size(); i++) {
+        if (height[i] < leftMax)
+            leftArr[i] = leftMax - height[i];
+        else {
+            leftMax = height[i];
+            leftArr[i] = 0;
+        }
+    }
+    for (int i = height.size() - 1; i >= 0; i--) {
+        if (height[i] < rightMax)
+            rightArr[i] = rightMax - height[i];
+        else {
+            rightMax = height[i];
+            rightArr[i] = 0;
+        }
+    }
+    for (int i = 0; i < height.size(); i++) {
+        result += min(leftArr[i], rightArr[i]);
+    }
+    return result;
+}
