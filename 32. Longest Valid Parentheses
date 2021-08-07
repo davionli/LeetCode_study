@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+    int maxValid = 0;
+    int curMax = 0;
+    int temp;
+    stack<int> m;
+    m.push(-1);
+    if (s == "")
+        return 0;
+    for (int i=0; i < s.length(); i++) {
+        if (s[i] == '(') 
+            m.push(i);
+        else {
+            m.pop();
+            if (m.empty()) {
+                m.push(i);
+            }else
+                curMax = i - m.top();
+        } 
+        maxValid = max(curMax, maxValid);
+    }
+    return maxValid;
+    }
+};
